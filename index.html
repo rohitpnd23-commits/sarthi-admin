@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sarthi Shop - Admin</title>
+<meta name="theme-color" content="#0f0f0f">
+<link rel="manifest" href="manifest.json">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
+body{background:#0f0f0f;color:#fff;min-height:100vh}
+.login{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+.card{background:#1a1a1a;border-radius:20px;padding:30px;width:100%;max-width:400px}
+.card h1{font-size:28px;margin-bottom:20px;text-align:center}
+input{width:100%;padding:14px;border-radius:10px;border:none;background:#2a2a2a;color:#fff;margin:10px 0;font-size:16px}
+.btn{width:100%;padding:14px;background:#ffb26b;border:none;border-radius:10px;font-weight:700;font-size:16px;margin-top:15px;cursor:pointer}
+.hidden{display:none}
+.header{display:flex;justify-content:space-between;align-items:center;padding:20px;background:#1a1a1a}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px}
+.stat{background:#1e1e1e;border-radius:16px;padding:16px}
+.stat h3{font-size:13px;color:#999;margin-bottom:8px}
+.stat b{font-size:28px}
+.green{color:#4ade80}.orange{color:#ffb26b}
+.item{background:#1e1e1e;border-radius:16px;padding:14px;margin:0 16px 12px;display:flex;justify-content:space-between;align-items:center}
+.tag{padding:6px 12px;border-radius:20px;font-size:12px;font-weight:600}
+.active{background:#4ade80;color:#000}.low{background:#ffb26b;color:#000}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#1a1a1a;display:flex;justify-content:space-around;padding:12px 0;border-top:1px solid #2a2a2a}
+.nav span{font-size:11px;text-align:center;color:#888}.nav .on{color:#ffb26b}
+</style>
+</head>
+<body>
+<div id="loginPage" class="login">
+<div class="card">
+<h1>🛍️ Sarthi Shop<br>Admin Login</h1>
+<input id="email" placeholder="Email: admin@sarthi.com">
+<input id="pass" type="password" placeholder="Password: admin123">
+<button class="btn" onclick="login()">Login</button>
+<p id="msg" style="color:#ff6b6b;text-align:center;margin-top:10px"></p>
+</div>
+</div>
+
+<div id="app" class="hidden">
+<div class="header">
+<div><b style="font-size:20px">🛍️ Sarthi Shop</b><br><small style="color:#999">Admin Panel</small></div>
+<button onclick="logout()" style="background:#2a2a2a;color:#fff;border:none;padding:8px 14px;border-radius:8px">Logout</button>
+</div>
+<h2 style="padding:20px 16px 0">Dashboard</h2>
+<p style="padding:0 16px;color:#888;font-size:13px">Welcome back, Admin - here's today's overview</p>
+<div class="stat-grid">
+<div class="stat"><h3>Total Orders</h3><b>1,248</b><br><small class="green">+12% vs last week</small></div>
+<div class="stat"><h3>Revenue</h3><b>$28,540</b><br><small class="green">+8.5% vs last week</small></div>
+<div class="stat" style="grid-column:1/3"><h3>Pending Orders</h3><b>34</b><br><small class="orange">5 orders need action</small></div>
+</div>
+<div style="display:flex;justify-content:space-between;padding:16px"><b>Product Management</b><button style="background:#ffb26b;border:none;padding:6px 12px;border-radius:20px;font-weight:700">+ Add Product</button></div>
+<div class="item"><div><b>Silk Kurta</b><br><small style="color:#888">Stock: 45 • SKU: SS-KUR-101</small></div><span class="tag active">Active</span></div>
+<div class="item"><div><b>Cotton T-Shirt</b><br><small style="color:#888">Stock: 12 • SKU: CT-TSH-220</small></div><span class="tag low">Low Stock</span></div>
+<div class="item"><div><b>Leather Bag</b><br><small style="color:#888">Stock: 8 • SKU: LB-BAG-077</small></div><span class="tag low">Low Stock</span></div>
+<div style="height:80px"></div>
+<div class="nav">
+<span class="on">📊<br>Dashboard</span><span>📦<br>Orders</span><span>👕<br>Products</span><span>👥<br>Customers</span><span>⚙️<br>Settings</span>
+</div>
+</div>
+
+<script>
+if(localStorage.getItem('sarthi_admin')){showApp()}
+function login(){
+let e=document.getElementById('email').value
+let p=document.getElementById('pass').value
+if(e==='admin@sarthi.com' && p==='admin123'){localStorage.setItem('sarthi_admin','true');showApp()}
+else{document.getElementById('msg').innerText='Wrong email or password!'}
+}
+function showApp(){document.getElementById('loginPage').classList.add('hidden');document.getElementById('app').classList.remove('hidden')}
+function logout(){localStorage.removeItem('sarthi_admin');location.reload()}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js')}
+</script>
+</body>
+</html>
